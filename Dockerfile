@@ -1,5 +1,5 @@
 # Usa uma imagem oficial do Java 17 (padrão do Spring Boot 3)
-FROM eclipse-temurin:17-jdk-jammy
+FROM eclipse-temurin:26-jdk-jammy
 
 # Define a pasta de trabalho dentro do servidor
 WORKDIR /app
