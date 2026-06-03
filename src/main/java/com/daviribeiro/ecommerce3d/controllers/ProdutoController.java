@@ -14,8 +14,8 @@ import java.util.HashMap;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/produtos")
+@CrossOrigin(origins = "*")
 public class ProdutoController {
 
     @Autowired
