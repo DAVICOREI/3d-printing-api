@@ -3,7 +3,7 @@ package com.daviribeiro.ecommerce3d.controllers;
 import com.daviribeiro.ecommerce3d.entities.Produto;
 import com.daviribeiro.ecommerce3d.repositories.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
+//import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/produtos")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class ProdutoController {
 
     @Autowired

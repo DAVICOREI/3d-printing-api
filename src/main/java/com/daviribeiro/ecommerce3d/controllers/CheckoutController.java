@@ -12,7 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/checkout")
-@CrossOrigin(origins = "*") // Permite que o Vercel acesse este endpoint
+//@CrossOrigin(origins = "*") // Permite que o Vercel acesse este endpoint
 public class CheckoutController {
 
     @Autowired
