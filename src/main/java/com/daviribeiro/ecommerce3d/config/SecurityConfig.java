@@ -1,5 +1,6 @@
 package com.daviribeiro.ecommerce3d.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -8,21 +9,23 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Autowired
+    private SecurityFilter securityFilter; // <--- Injeta o filtro novo aqui
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-            .cors(Customizer.withDefaults()) // 1. Avisa o Security para usar a nossa classe CorsConfig
+            .cors(Customizer.withDefaults())
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize
-                // 2. Libera a requisição invisível (OPTIONS) para o navegador não surtar
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() 
-                
                 .requestMatchers(HttpMethod.GET, "/api/produtos").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/checkout/pagar").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
@@ -30,6 +33,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/produtos").authenticated()
                 .anyRequest().authenticated()
             )
+            // Avisa o Spring para rodar o nosso leitor de token antes de tudo
+            .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class) // <--- Linha nova
             .build();
     }
 }
