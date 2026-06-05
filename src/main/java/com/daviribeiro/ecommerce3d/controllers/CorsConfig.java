@@ -9,9 +9,9 @@ public class CorsConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**") // Aplica para todas as URLs da sua API (/api/produtos, /api/checkout, etc)
-                .allowedOrigins("*") // Permite qualquer site (Vercel, localhost)
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Permite todos os verbos (incluindo o chato do OPTIONS)
-                .allowedHeaders("*"); // Permite qualquer cabeçalho de segurança
+        registry.addMapping("/**") // Libera para todas as rotas da API
+                .allowedOrigins("*") // Permite acesso de qualquer site (sua Vercel ou localhost)
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD") // Libera todos os verbos
+                .allowedHeaders("*"); // Libera todos os cabeçalhos
     }
 }

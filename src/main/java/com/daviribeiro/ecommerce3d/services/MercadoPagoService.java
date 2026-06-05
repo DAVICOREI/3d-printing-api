@@ -7,7 +7,6 @@ import com.mercadopago.resources.preference.Preference;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.PostConstruct;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
