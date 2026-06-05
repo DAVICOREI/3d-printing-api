@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -22,25 +23,23 @@ public class SecurityFilter extends OncePerRequestFilter {
     private TokenService tokenService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         
-        // 1. Tenta recuperar o token que vem no cabeçalho da requisição
-        var token = recoverToken(request);
+        var token = this.recoverToken(request);
         
         if (token != null) {
-            // 2. Valida o token usando o TokenService
+            // Trocamos 'validateToken' por 'validarToken'
             var login = tokenService.validarToken(token);
             
-            if (!login.isEmpty()) {
-                // 3. Se o token for válido, cria a autorização do Administrador e avisa o Spring Security
-                var authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"));
-                var authentication = new UsernamePasswordAuthenticationToken(login, null, authorities);
+            // Se o token for válido e não retornar vazio, a gente já autoriza direto!
+            if (login != null && !login.isEmpty()) {
+                var authentication = new UsernamePasswordAuthenticationToken(login, null, Collections.emptyList());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
         
-        // Segue o fluxo normal da requisição
+        // ESSA É A LINHA MÁGICA: Independente de ter token ou não, manda a requisição seguir o fluxo!
+        // Quem vai bloquear ou liberar é o SecurityConfig.
         filterChain.doFilter(request, response);
     }
 

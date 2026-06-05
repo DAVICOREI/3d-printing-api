@@ -27,7 +27,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() 
                 .requestMatchers(HttpMethod.GET, "/api/produtos").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/checkout/pagar").permitAll()
+                // Trocamos a rota exata por um curinga que engloba tudo do checkout
+                .requestMatchers("/api/checkout/**").permitAll() 
                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                 
                 .requestMatchers(HttpMethod.POST, "/api/produtos").authenticated()
