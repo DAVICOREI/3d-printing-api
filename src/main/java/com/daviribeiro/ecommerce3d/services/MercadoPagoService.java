@@ -1,5 +1,6 @@
 package com.daviribeiro.ecommerce3d.services;
 
+import com.daviribeiro.ecommerce3d.entities.Pedido;
 import com.mercadopago.MercadoPagoConfig;
 import com.mercadopago.client.preference.*;
 import com.mercadopago.resources.preference.Preference;
@@ -26,13 +27,17 @@ public class MercadoPagoService {
         MercadoPagoConfig.setAccessToken(accessToken);
     }
 
-    public String criarPreferencia() {
+    // Atualize o método para receber o Pedido
+    public String criarPreferencia(Pedido pedido) {
         try {
-            // 1. O que está sendo comprado (Aqui depois vamos receber os itens do carrinho)
+            // Cole seu novo token aqui
+            MercadoPagoConfig.setAccessToken("APP_USR-SEU-NOVO-TOKEN-AQUI");
+
+            // Substitui aquele "Produto Teste" e "150.00" pelos dados reais do banco
             PreferenceItemRequest itemRequest = PreferenceItemRequest.builder()
-                    .title("Pedido Loja 3D")
+                    .title("Encomenda 3D - Pedido #" + pedido.getId())
                     .quantity(1)
-                    .unitPrice(new BigDecimal("150.00")) // Valor de teste
+                    .unitPrice(pedido.getTotal()) // <--- Pega a soma real do carrinho!
                     .currencyId("BRL")
                     .build();
 
