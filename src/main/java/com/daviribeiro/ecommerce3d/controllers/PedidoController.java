@@ -5,6 +5,7 @@ import com.daviribeiro.ecommerce3d.entities.ItemPedido;
 import com.daviribeiro.ecommerce3d.entities.Pedido;
 import com.daviribeiro.ecommerce3d.repositories.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,5 +30,12 @@ public class PedidoController {
     @GetMapping("/usuario/{usuarioId}")
     public List<Pedido> listarPedidosPorUsuario(@PathVariable Long usuarioId) {
         return repository.findByUsuarioId(usuarioId);
+    }
+
+    // Coloque este método dentro do seu PedidoController
+    @GetMapping("/admin")
+    public ResponseEntity<List<Pedido>> listarFilaDeEspera() {
+        List<Pedido> fila = repository.findAllByOrderByDataPedidoAsc();
+        return ResponseEntity.ok(fila);
     }
 }
