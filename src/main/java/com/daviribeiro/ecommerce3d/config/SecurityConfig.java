@@ -31,6 +31,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() 
                 .requestMatchers(HttpMethod.GET, "/api/produtos").permitAll()
                 .requestMatchers("/api/checkout/**").permitAll() // Passe livre para o checkout
+                .requestMatchers("/api/webhook/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/produtos").authenticated()
                 .anyRequest().authenticated()

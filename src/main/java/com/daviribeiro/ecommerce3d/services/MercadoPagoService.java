@@ -45,11 +45,12 @@ public class MercadoPagoService {
                     .pending(frontendUrl + "/pedidos")
                     .build();
 
-            // 3. Monta a preferência completa
+            // 3. Monta a preferência completa avisando onde está o nosso Webhook
             PreferenceRequest preferenceRequest = PreferenceRequest.builder()
                     .items(items)
                     .backUrls(backUrls)
                     .autoReturn("approved")
+                    .notificationUrl("https://threed-printing-api-fv1h.onrender.com/api/webhook/mercadopago") // <-- URL real do seu Render
                     .build();
 
             // 4. Faz a chamada para a API do Mercado Pago
