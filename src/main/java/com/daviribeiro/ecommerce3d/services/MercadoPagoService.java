@@ -60,8 +60,12 @@ public class MercadoPagoService {
             // Retorna o link de pagamento criptografado
             return preference.getInitPoint();
 
+        } catch (com.mercadopago.exceptions.MPApiException apiException) {
+            // Captura o erro profundo direto dos servidores do Mercado Pago
+            System.out.println("🚨 Motivo da recusa do MP: " + apiException.getApiResponse().getContent());
+            return null;
         } catch (Exception e) {
-            System.out.println("Erro ao gerar link do Mercado Pago: " + e.getMessage());
+            System.out.println("Erro interno ao gerar link: " + e.getMessage());
             return null;
         }
     }
